@@ -8,6 +8,8 @@ import { Provider as ReduxProvider } from "react-redux";
 import OrderCompleted from "./Screens/OrderCompleted";
 import Favorites from "./Screens/Favorites";
 import Orders from "./Screens/Orders";
+import Login from "./Screens/Login";
+import Register from "./Screens/Register";
 
 
 
@@ -30,6 +32,11 @@ function RootNavigation(){
               <Stack.Screen name="OrderCompleted" component={OrderCompleted} />
               <Stack.Screen name="Favorites" component={Favorites} />
               <Stack.Screen name="Orders" component={Orders} />
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+
+
+
             </Stack.Navigator>
           </NavigationContainer>
       </ReduxProvider>
