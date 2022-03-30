@@ -1,3 +1,17 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  # resources :orders
+  # post "/add", to:"orders#create"
+  # post "/update", to: "orders#update"
+  # delete "/remove", to: "orders#destroy"
+
+  # resources :favorites
+  # post "/add", to:"favorites#create"
+  # post "/update", to: "favorites#update"
+  # delete "/remove", to: "favorites#destroy"
+
+  resources :users
+  post "/login", to: "auth#create"
+  get "/auto_login", to: "auth#auto_login"
+  post "/logged_in", to: "application#logged_in?"
+  delete "/favorites", to: "favorites#index"
 end

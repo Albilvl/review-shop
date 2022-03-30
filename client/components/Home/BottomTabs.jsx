@@ -22,7 +22,7 @@ const BottomTabs = ({navigation}) => {
         <Icon name= 'home' text= 'Home' />
         <Icon name= 'star' text= 'Favorites' goToPlace={()=> navigation.navigate('Favorites')}/>
         <Icon name= 'receipt' text= 'Orders' goToPlace={()=> navigation.navigate('Orders')}/>
-        <Icon name= 'user' text= 'Account' />
+        <Icon name= 'user' text= 'Account'  goToPlace ={()=>navigation.navigate('Login')}/>
     
     </View>
   )

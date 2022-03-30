@@ -7,6 +7,8 @@ import FavoriteRestaurants from '../components/Favorites.jsx/FavoriteRestaurants
 const Favorites = ({navigation}) => {
     const[favRestaurants, setFavRestaurants]= useState([])
 
+    
+
 
   return (
     <View>
