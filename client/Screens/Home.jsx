@@ -6,6 +6,7 @@ import HeaderTabs from '../components/Home/HeaderTabs'
 import Searchbar from '../components/Home/Searchbar'
 import Categories from '../components/Home/Categories'
 import RestaurantItems from '../components/Home/RestaurantItems'
+
 import BottomTabs from '../components/Home/BottomTabs'
 
 export default function Home({navigation}) {

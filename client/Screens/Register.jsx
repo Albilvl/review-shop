@@ -6,7 +6,7 @@ function Register({navigation}) {
     return (
     <>
         <View>
-        <Image source ={require('../assets/images/deals.png')}
+        <Image source ={require('../assets/images/shopping-bag.png')}
             style={{width:"70%",height:"45%", marginLeft:"15%", marginTop:"20%",}}></Image>
                 <Text 
                     onPress={()=>navigation.navigate('Register')}
