@@ -17,7 +17,7 @@ class AuthController < ApplicationController
      
       # UserSerializer is a serializer in the serializers folder. To use this the active_model_serializers gem is needed.
       # This helps clean the data that is sent out to limited attributes you want listed
-      render json: { user: UserSerializer.new(@user), jwt: @token }, status: :accepted
+      render json: { username: UserSerializer.new(@user), jwt: @token }, status: :accepted
       
       # Without a serializer or status the following line would suffice
       #  render json: { user: @user, jwt: @token}
@@ -39,6 +39,6 @@ class AuthController < ApplicationController
   private
 
   def user_login_params
-    params.require(:user).permit(:username, :password)
+    params.require(:username).permit(:username, :password)
   end
 end

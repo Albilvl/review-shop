@@ -1,4 +1,5 @@
 import React from "react";
+import {Text} from 'react-native'
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import Home from "./Screens/Home";
@@ -13,7 +14,11 @@ import Register from "./Screens/Register";
 
 
 
-
+function testing () {
+  return (<Text
+  style={{color: 'black'}}
+  >Hiiii</Text>)
+}
 
 function RootNavigation(){
     const Stack = createStackNavigator();
@@ -32,7 +37,7 @@ function RootNavigation(){
               <Stack.Screen name="OrderCompleted" component={OrderCompleted} />
               <Stack.Screen name="Favorites" component={Favorites} />
               <Stack.Screen name="Orders" component={Orders} />
-              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Login" component={Login} testing={testing} />
               <Stack.Screen name="Register" component={Register} />
 
 

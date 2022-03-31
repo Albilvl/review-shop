@@ -1,10 +1,12 @@
 class FavoritesController < ApplicationController
+
+    skip_before_action :authorized, only: [:create]
     def index 
         render json: Favorite.all, status: :ok
     end 
 
     def show
-        production = Favorite.find(params[:id])
+        favorite = Favorite.find(params[:id])
         render json: favorite, include: :orders, status: :ok
     end 
 

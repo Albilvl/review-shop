@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # post "/update", to: "favorites#update"
   # delete "/remove", to: "favorites#destroy"
 
-  resources :users
+  resources :users, only: [:create]
   post "/login", to: "auth#create"
   get "/auto_login", to: "auth#auto_login"
   post "/logged_in", to: "application#logged_in?"

@@ -11,12 +11,13 @@ const Favorites = ({navigation}) => {
 
 
   return (
-    <></>
-    // <View>
-    //   <Header/>
-    //   <Divider/>
-    //   <FavoriteRestaurants navigation={navigation} favRestaurants={favRestaurants}/>
-    // </View>
+    <>
+    <View>
+      <Header/>
+      <Divider/>
+      <FavoriteRestaurants navigation={navigation} favRestaurants={favRestaurants}/>
+    </View>
+    </>
   )
 }
 

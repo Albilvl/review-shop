@@ -1,11 +1,42 @@
 
-import React from 'react'
-import {Text,View,Image, TextInput} from 'react-native';
+import React, { useState } from 'react'
+import {Text,View,Image, TextInput, TouchableOpacity} from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
+import * as SecureStore from 'expo-secure-store';
+
+
+
+
 
 
 const Login = ({navigation}) =>{
 
+
+const [token, setToken] = useState('')
+const [username, setUsername] = useState('')
+const [password, setPassword] = useState('')
+        
+
+function handleLogin(e) {
+            const user = { username, password }
+             SecureStore.getItemAsync("secure_token").then(SecureStore.setItemAsync("secure_token",token));
+             if(token !== null) { 
+                fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+                }   ,
+                body: JSON.stringify({user})
+                })
+                .then((r) => r.json())
+                .then((response) => {
+                setToken(response.JWT);
+        })} 
+        console.log(token);
+    }
+
+   
     return (
         <>
             <View style={{backgroundColor:"#FFF",height:"100%"}}>
@@ -19,81 +50,97 @@ const Login = ({navigation}) =>{
                         color:"#00716F",
                         fontFamily:"SemiBold",
                         paddingVertical:30
-                        
                         }}>
-                        Welcome Back</Text>
-                
-        
- 
-        <Text   style={{
-                    fontSize:25,
-                    fontFamily:"SemiBold",
-                    alignSelf:"center",
-                    marginTop: "-5%"
-                }}>Sign In</Text>
-
+                        Welcome Back
+                    </Text> 
+                    <Text   
+                        style={{
+                        fontSize:25,
+                        fontFamily:"SemiBold",
+                        alignSelf:"center",
+                        marginTop: "-5%"
+                        }}>
+                        Sign In
+                    </Text>
                 <View style={{
-                    flexDirection:"row",
-                    alignItems:"center",
-                    marginHorizontal:55,
-                    borderWidth:2,
-                    marginTop:50,
-                    paddingHorizontal:10,
-                    borderColor:"#00716F",
-                    borderRadius:23,
-                    paddingVertical:2
+                        flexDirection:"row",
+                        alignItems:"center",
+                        marginHorizontal:55,
+                        borderWidth:2,
+                        marginTop:50,
+                        paddingHorizontal:10,
+                        borderColor:"#00716F",
+                        borderRadius:23,
+                        paddingVertical:2
                 }}>
-                    <Icon name="mail" color="#00716F" size={24}/>
-                    <TextInput 
-                 
-                    placeholder="Enter your Email/Username" color="#00716F"
-                    style={{paddingHorizontal:10}}
-                    />
-     
-                    </View>
-                    <View style={{
-                    flexDirection:"row",
-                    alignItems:"center",
-                    marginHorizontal:55,
-                    borderWidth:2,
-                    marginTop:30,
-                   
-                    paddingHorizontal:10,
-                    borderColor:"#00716F",
-                    borderRadius:23,
-                    paddingVertical:2
-                 }}>
-                    <Icon name="eye" color="#00716F" size={24}/>
-                    <TextInput 
+                <Icon name="mail" color="#00716F" size={24}
+                />
+                <TextInput 
+                         onChangeText= {(e) => setUsername(e)}
+                        placeholder="Enter Username" color="#00716F"
+                        style={{paddingHorizontal:10}}
+                />
+                </View>
+                <View style={{
+                        flexDirection:"row",
+                        alignItems:"center",
+                        marginHorizontal:55,
+                        borderWidth:2,
+                        marginTop:30,
+                        paddingHorizontal:10,
+                        borderColor:"#00716F",
+                        borderRadius:23,
+                        paddingVertical:2
+                }}>
+                <Icon name="eye" color="#00716F" size={24}
+                />
+                <TextInput 
+                        onChangeText= {(e) => setPassword(e)}
+
                         secureTextEntry
                         placeholder="Enter your password" color="#00716F"
                         style={{
-                          
-                            paddingHorizontal:10}}
-                        
-                    />
-                 
-                    </View>
-                    <View style={{
-                    marginHorizontal:55,
-                    alignItems:"center",
-                    justifyContent:"center",
-                    marginTop:30,
-                    backgroundColor:"#00716F",
-                    paddingVertical:10,
-                    borderRadius:23
+                        paddingHorizontal:10}}
+                />
+                </View>
+                <View style={{
+                        marginHorizontal:55,
+                        alignItems:"center",
+                        justifyContent:"center",
+                        marginTop:30,
+                        backgroundColor:"#00716F",
+                        paddingVertical:10,
+                        borderRadius:23
                 }}>
-                    <Text
-                    onPress={()=>navigation.navigate('Register')}
-                    style={{
+                <TouchableOpacity
+                        onPress={()=>handleLogin()}
+                        style={{
                         color:"white",
-                        fontFamily:"SemiBold"
-                    }}>Don't Have An Account?</Text>
-                    </View>
-                    
-        
-  
-        </View>
+                        fontFamily:"SemiBold"}}>
+                    <Text>
+                        Sign In
+                    </Text>
+                </TouchableOpacity>
+                </View>
+                    <View style={{
+                        marginHorizontal:55,
+                        alignItems:"center",
+                        justifyContent:"center",
+                        marginTop:30,
+                        backgroundColor:"#00716F",
+                        paddingVertical:10,
+                        borderRadius:23}}>
+                    <TouchableOpacity
+                        onPress={()=>navigation.navigate('Register')}
+                        style={{
+                        color:"white",
+                        fontFamily:"SemiBold"}}>
+                        <Text>
+                            Don't Have An Account?
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </>
       
     )
