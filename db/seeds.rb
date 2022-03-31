@@ -3,7 +3,7 @@
 #
 # Examples:
 #
-user = User.create([{ username: 'Star Wars' }, { password: 'Lord of the Rings' }])
+user = User.create([{ username: '' }, { password: '' }])
 
 
 
