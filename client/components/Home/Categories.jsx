@@ -35,6 +35,8 @@ const Categories = () => {
   return (
       <View style={{
           backgroundColor: 'white',
+          borderBottomColor: 'black',
+        
           marginTop:5,
           paddingVertical: 10,
           paddingLeft: 20

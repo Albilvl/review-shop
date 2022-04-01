@@ -14,6 +14,7 @@ const BottomTabs = ({navigation}) => {
     )
   return (
     <View style={{
+        backgroundColor:"white",
         flexDirection: 'row',
         marging: 10, 
         marginHorizontal:30,

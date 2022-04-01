@@ -15,9 +15,13 @@ const Login = ({navigation}) =>{
 const [token, setToken] = useState('')
 const [username, setUsername] = useState('')
 const [password, setPassword] = useState('')
-        
+const [hide, setHide] = useState(true)
+
+
+
 
 function handleLogin(e) {
+
             const user = { username, password }
              SecureStore.getItemAsync("secure_token").then(SecureStore.setItemAsync("secure_token",token));
              if(token !== null) { 
@@ -33,14 +37,18 @@ function handleLogin(e) {
                 .then((response) => {
                 setToken(response.JWT);
         })} 
-        console.log(token);
+        console.log("hi");
+
+       
+
+
     }
 
    
     return (
         <>
-            <View style={{backgroundColor:"#FFF",height:"100%"}}>
-                <Image source ={require('../assets/images/shopping-bag.png')}
+            <View style={{backgroundColor:"white",height:"100%"}}>
+                <Image source ={require('../assets/icons/giphy.gif')}
                     style={{width:"80%",height:"33%", marginLeft:"10%", marginTop:"40%"}}></Image>
                     <Text 
                         onPress={()=>navigation.navigate('Register')}
@@ -51,7 +59,7 @@ function handleLogin(e) {
                         fontFamily:"SemiBold",
                         paddingVertical:30
                         }}>
-                        Welcome Back
+                        Welcome Back,
                     </Text> 
                     <Text   
                         style={{
@@ -60,7 +68,7 @@ function handleLogin(e) {
                         alignSelf:"center",
                         marginTop: "-5%"
                         }}>
-                        Sign In
+                        
                     </Text>
                 <View style={{
                         flexDirection:"row",
@@ -77,7 +85,9 @@ function handleLogin(e) {
                 />
                 <TextInput 
                          onChangeText= {(e) => setUsername(e)}
-                        placeholder="Enter Username" color="#00716F"
+                        placeholder="Enter Username"
+                        placeholderTextColor="#00716F"
+                        
                         style={{paddingHorizontal:10}}
                 />
                 </View>
@@ -91,13 +101,13 @@ function handleLogin(e) {
                         borderColor:"#00716F",
                         borderRadius:23,
                         paddingVertical:2
-                }}>
-                <Icon name="eye" color="#00716F" size={24}
+                }}>{}
+                <Icon onPress={() => setHide(!hide)}  name="eye"  color="#00716F" size={24}
                 />
                 <TextInput 
                         onChangeText= {(e) => setPassword(e)}
-
-                        secureTextEntry
+                        secureTextEntry={hide}
+                        placeholderTextColor="#00716F"
                         placeholder="Enter your password" color="#00716F"
                         style={{
                         paddingHorizontal:10}}
@@ -117,10 +127,28 @@ function handleLogin(e) {
                         style={{
                         color:"white",
                         fontFamily:"SemiBold"}}>
-                    <Text>
+                    <Text style={{color:"white",}}>
                         Sign In
                     </Text>
                 </TouchableOpacity>
+                </View>
+                 <View style={{
+                        marginHorizontal:55,
+                        alignItems:"center",
+                        justifyContent:"center",
+                        marginTop:30,
+                        backgroundColor:"#00716F",
+                        paddingVertical:10,
+                        borderRadius:23
+                }}>
+                <TouchableOpacity
+                        onPress={()=>navigation.navigate('Register')}                        style={{
+                        color:"white",
+                        fontFamily:"SemiBold"}}>
+                    <Text style={{color:"white",}}>
+                        Log Out
+                    </Text>
+                </TouchableOpacity> 
                 </View>
                     <View style={{
                         marginHorizontal:55,
@@ -135,14 +163,14 @@ function handleLogin(e) {
                         style={{
                         color:"white",
                         fontFamily:"SemiBold"}}>
-                        <Text>
+                        <Text style={{color:"white",}}>
                             Don't Have An Account?
                         </Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </>
-      
+
     )
 }
 

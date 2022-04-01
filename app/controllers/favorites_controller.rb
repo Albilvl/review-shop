@@ -1,6 +1,6 @@
 class FavoritesController < ApplicationController
 
-    skip_before_action :authorized, only: [:create]
+    skip_before_action :authorized, only: [:create, :update, :destroy]
     def index 
         render json: Favorite.all, status: :ok
     end 
@@ -11,7 +11,7 @@ class FavoritesController < ApplicationController
     end 
 
     def create
-        favorite = Favorite.create!(production_params)
+        favorite = Favorite.create!(favorite_params)
     end 
 
     def update 
@@ -29,7 +29,7 @@ class FavoritesController < ApplicationController
     private
 
 
-    def production_params
+    def favorite_params
         params.permit(:restaurant_name, :restaurant_image, :rating)
     end 
 

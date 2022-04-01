@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   # post "/update", to: "orders#update"
   # delete "/remove", to: "orders#destroy"
 
-  # resources :favorites
-  # post "/add", to:"favorites#create"
-  # post "/update", to: "favorites#update"
-  # delete "/remove", to: "favorites#destroy"
+  resources :favorites
+  post "/add", to:"favorites#create"
+  post "/update", to: "favorites#update"
+  delete "/remove", to: "favorites#destroy"
 
   resources :users, only: [:create]
   post "/login", to: "auth#create"

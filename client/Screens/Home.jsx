@@ -9,10 +9,14 @@ import RestaurantItems from '../components/Home/RestaurantItems'
 
 import BottomTabs from '../components/Home/BottomTabs'
 
+
+
 export default function Home({navigation}) {
   const [restaurants, setRestaurants] = useState([])
   const [city, setCity] = useState('New York')
   const [status,setStatus] = useState('Delivery')
+  const [headerShown, setHeaderShown] = useState(false);
+
 
 
   const YELP_API_KEY = 
@@ -38,7 +42,7 @@ export default function Home({navigation}) {
    ); 
   };
 
-  
+
 
   useEffect(() => {
     getRestaurantsFromYelp();
@@ -48,7 +52,12 @@ export default function Home({navigation}) {
 
   return (
     // SafeAreaView is used for viewing in the proper space, 
-    <SafeAreaView style={{backgroundColor: '#eee', flex: 1, }}>
+    <SafeAreaView 
+    style={{ backgroundColor:"white",flex: 1, 
+      
+  }}
+    >
+      
         <View style={{backgroundColor: 'white', padding: 15}}>
           <HeaderTabs setStatus= {setStatus} status={status}/>
           <Searchbar setCity={setCity}/>

@@ -9,6 +9,7 @@ function Register({navigation}) {
     const [email, setEmail] = useState('')
     const [created, setCreated] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const [hide,setHide] = useState(true)
     
     // (text) => this.setUsername(text);
 
@@ -46,17 +47,18 @@ function Register({navigation}) {
     
 
     return (
-    <>
+    < >
     {created ? (
         <>
             {navigation.navigate('Login')}
         </>
         ) : (
-            <View>
-                <Image source ={require('../assets/images/shopping-bag.png')}
-                    style={{width:"70%",height:"45%", marginLeft:"15%", marginTop:"20%",}}>
+            <View style={{backgroundColor: 'black', height:"100%"}}>
+                <Image source ={require('../assets/icons/join-us.gif')}
+                    style={{width:"100%",height:"35%", marginRight:"35%", marginTop:"30%"}}>
                 </Image>
                     <Text 
+                  
                     onPress={()=>navigation.navigate('Register')}
                     style={{
                     fontSize:25,
@@ -64,7 +66,7 @@ function Register({navigation}) {
                     color:"#00716F",
                     fontFamily:"SemiBold",
                     paddingVertical:30}}>
-                    Join Us
+                    
                     </Text>
                 <View 
                     style={{
@@ -72,10 +74,11 @@ function Register({navigation}) {
                     alignItems:"center",
                     marginHorizontal:55,
                     borderWidth:2,
-                    marginTop:0,
+                    marginTop:"15%",
                     paddingHorizontal:10,
                     borderColor:"#00716F",
                     borderRadius:23,
+                    backgroundColor: "black",
                     paddingVertical:2}}>
                 <Icon name="mail" color="#00716F" size={24}/>
                     <TextInput 
@@ -116,9 +119,9 @@ function Register({navigation}) {
                     borderRadius:23,
                     paddingVertical:2
                 }}>
-                <Icon name="eye" color="#00716F" size={24}/>
+                <Icon  onPress={() => setHide(!hide)} name="eye" color="#00716F" size={24}/>
                 <TextInput 
-                    secureTextEntry
+                    secureTextEntry={hide}
                     onChangeText= {(e) => setPassword(e)}
                     value={password}
                     placeholder="Password"

@@ -10,9 +10,11 @@ const Searchbar = ({setCity}) => {
     
     <View style={{marginTop:15, flexDirection: 'row'}}>
       <GooglePlacesAutocomplete 
-            placeholder='Search'
+            
+            placeholder='Search' 
             styles ={{
                 textInput: {
+                    color:"black",
                     backgroundColor: '#eee', 
                     borderRadius: 30,
                     fontWeight:'700',
