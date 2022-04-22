@@ -4,9 +4,6 @@ class CreateFavorites < ActiveRecord::Migration[6.1]
       t.string :restaurant_image
       t.string :restaurant_name
       t.float :rating
-
-
-
       t.timestamps
     end
   end

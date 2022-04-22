@@ -19,7 +19,7 @@ class AuthController < ApplicationController
       # This helps clean the data that is sent out to limited attributes you want listed
       render json: { username: UserSerializer.new(@user), jwt: @token }, status: :accepted
       
-      # Without a serializer or status the following line would suffice
+      # # Without a serializer or status the following line would suffice
       #  render json: { user: @user, jwt: @token}
       
     else
@@ -39,6 +39,6 @@ class AuthController < ApplicationController
   private
 
   def user_login_params
-    params.require(:username).permit(:username, :password)
+    params.require(:user).permit(:username, :password)
   end
 end
