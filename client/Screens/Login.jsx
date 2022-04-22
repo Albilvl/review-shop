@@ -1,8 +1,10 @@
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Text,View,Image, TextInput, TouchableOpacity} from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
 import * as SecureStore from 'expo-secure-store';
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 
@@ -10,35 +12,149 @@ import * as SecureStore from 'expo-secure-store';
 
 
 const Login = ({navigation}) =>{
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [key, setKey] = useState('')
+    const [token, setToken] = useState('')
+    const [user, setUser] = useState({})
+    const [loggedIn, setLoggedIn] = useState(false)
+    
+    async function save(key, value){
+        await SecureStore.setItemAsync(key, value)
+    }
+  
 
 
-const [token, setToken] = useState('')
-const [username, setUsername] = useState('')
-const [password, setPassword] = useState('')
-        
-
-function handleLogin(e) {
-            const user = { username, password }
-             SecureStore.getItemAsync("secure_token").then(SecureStore.setItemAsync("secure_token",token));
-             if(token !== null) { 
-                fetch('http://localhost:3000/login', {
-                method: 'POST',
-                headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-                }   ,
-                body: JSON.stringify({user})
-                })
-                .then((r) => r.json())
-                .then((response) => {
-                setToken(response.JWT);
-        })} 
-        console.log(token);
+    async function getValuefor(key){
+        let result = await SecureStore.getItemAsync(key);
+        if (result){
+            console.log(result)
+        } else {console.log("invalid key")}
     }
 
-   
+    // function setCurrentUser(currentUser){
+    //     setUser(currentUser)
+    //     // setLoggedIn(true)
+    // }
+
+
+
+    const dispatch = useDispatch()
+
+    const grabUsername = (username, loggedIn) => 
+        dispatch({
+            type: "LOGGED_IN",
+            payload: {
+                username:username,
+                token: token
+            },
+        })
+
+    function router(){
+        if (typeof token !== 'undefined' && token.length >1 && token !== 'undefined')
+        {navigation.navigate('Home')} else{ console.log("it didnt work")}
+    }
+
+
+    // function currentUser(){
+    //     if (typeof token !== 'undefined' && token.length >1 && token !== 'undefined')
+    //     {setLoggedIn(true)} else{ console.log("it didnt work")}
+    // }
+
+    
+    
+    function handleLogin(e) {
+        const user = {username, password}
+        setKey("user"),
+        fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user }),
+        })
+        .then((r) => r.json())
+        .then((response) => {
+            setToken(response.jwt)
+            save(key, response.jwt);
+            // currentUser()
+            // setCurrentUser(response.user);
+            
+        });
+        // console.log (token)
+        router()
+        grabUsername(user.username, token)
+    }
+
+    const userInfo= useSelector(
+        (state) => state.userReducer.userInfo.token
+      );
+    
+
+    // const {retrievedToken} = useSelector((state)=> state.userReducer.userInfo.token)
+    // console.log (retrievedToken)
+
+    // useEffect(() => {
+    //     const secure_token = retrievedToken;
+    //     if (typeof secure_token !== 'undefined' && secure_token.length > 1
+    //       && secure_token !== 'undefined'
+    //     ) {
+    //       fetch('http://localhost:3000/auto_login', {
+    //         method: 'POST',
+    //         headers: {
+    //           Accept: 'application/json',
+    //           'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify({ secure_token }),
+    //       })
+    //         .then((r) => r.json())
+    //         .then((user) => setCurrentUser(user));
+    //     } else {
+    //       console.log('No token found, try logging in!');
+    //     }
+    //   }, []);
+
+
+    
+    useEffect(() => {
+        getValuefor('user');
+      }, []);
+
+
+function handleLogout(){
+    // grabUsername("nada", "")
+    save("user", "")
+}
+
     return (
         <>
+            {userInfo.length > 1 ? (
+                <View style={{backgroundColor:"#FFF",height:"100%"}}>
+                    <Image source ={require('../assets/images/shopping-bag.png')}
+                    style={{width:"80%",height:"33%", marginLeft:"10%", marginTop:"40%"}}></Image>
+                    <Text 
+                        onPress={()=>navigation.navigate('Register')}
+                        style={{
+                        fontSize:25,
+                        alignSelf:"center",
+                        color:"#00716F",
+                        paddingVertical:30
+                        }}>
+                       WELCOME BACK
+                    </Text> 
+                    <TouchableOpacity
+                        onPress={()=>handleLogout()}
+                        style={{
+                        color:"white",
+                        }}>
+                        <Text>
+                            LogOut
+                        </Text>
+                   </TouchableOpacity>
+                </View>
+            ):(
+                
             <View style={{backgroundColor:"#FFF",height:"100%"}}>
                 <Image source ={require('../assets/images/shopping-bag.png')}
                     style={{width:"80%",height:"33%", marginLeft:"10%", marginTop:"40%"}}></Image>
@@ -48,15 +164,14 @@ function handleLogin(e) {
                         fontSize:25,
                         alignSelf:"center",
                         color:"#00716F",
-                        fontFamily:"SemiBold",
                         paddingVertical:30
                         }}>
-                        Welcome Back
+                       HEY THERE
                     </Text> 
                     <Text   
                         style={{
                         fontSize:25,
-                        fontFamily:"SemiBold",
+
                         alignSelf:"center",
                         marginTop: "-5%"
                         }}>
@@ -76,7 +191,8 @@ function handleLogin(e) {
                 <Icon name="mail" color="#00716F" size={24}
                 />
                 <TextInput 
-                         onChangeText= {(e) => setUsername(e)}
+                         onChangeText= {(e) =>( setUsername(e),
+                            console.log(username))}
                         placeholder="Enter Username" color="#00716F"
                         style={{paddingHorizontal:10}}
                 />
@@ -116,7 +232,7 @@ function handleLogin(e) {
                         onPress={()=>handleLogin()}
                         style={{
                         color:"white",
-                        fontFamily:"SemiBold"}}>
+                        }}>
                     <Text>
                         Sign In
                     </Text>
@@ -134,13 +250,14 @@ function handleLogin(e) {
                         onPress={()=>navigation.navigate('Register')}
                         style={{
                         color:"white",
-                        fontFamily:"SemiBold"}}>
+                        }}>
                         <Text>
                             Don't Have An Account?
                         </Text>
                     </TouchableOpacity>
                 </View>
             </View>
+            )}
         </>
       
     )

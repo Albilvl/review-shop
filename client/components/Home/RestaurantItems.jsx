@@ -1,8 +1,21 @@
 import { View, Text,Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import {React,useState} from 'react'
 import {MaterialCommunityIcons} from 'react-native-vector-icons'
+import * as SecureStore from 'expo-secure-store';
 
 const RestaurantItems = ({navigation, ...props}) => {
+    const[secure, setSecure] = useState("")
+
+
+    async function getValuefor(key){
+        let token = await SecureStore.getItemAsync(key);
+        if (token){
+          console.log ('it worked here')
+          setSecure(token);
+          console.log (secure)
+        } else {console.log("invalid key")}
+      }
+      
 
     const RestaurantImage = (props) => (
         <>
@@ -10,7 +23,7 @@ const RestaurantItems = ({navigation, ...props}) => {
                 source = {{uri: props.image}}
                 style ={{width: "100%", height: 180}}
             />
-            <TouchableOpacity style={{position: "absolute", right:20}}>
+            <TouchableOpacity style={{position: "absolute", right:20}} onPress={()=> handlePost()} >
                 <MaterialCommunityIcons name ="heart-outline" size = {25} color = "red"/>
             </TouchableOpacity>
         </>
@@ -45,6 +58,31 @@ const RestaurantItems = ({navigation, ...props}) => {
     )
 
  
+
+    function handlePost(restaurant) {
+
+        getValuefor("user");
+          fetch("http://localhost:3000/favorites", {
+          Method: "POST",
+          headers: {
+            Authorization: `Bearer ${secure}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+          },
+          body: JSON.stringify({ restaurant}),
+         })
+          .then((res) => res.json())
+        //   .then((favs) => 
+        //   // console.log (favs),
+        //   setFavRestaurants(favs));
+        //   console.log (favRestaurants)
+        
+      }
+
+
+
+
+
   return (
         <>
          {props.restaurants.map((restaurant, id) => (

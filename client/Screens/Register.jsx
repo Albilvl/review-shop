@@ -30,6 +30,7 @@ function Register({navigation}) {
             body: JSON.stringify({user}),
 
         })
+        // console.log (user)
         .then((r) => r.json())
         .then ((response) => {
             if (response.status === 'created') {
@@ -42,6 +43,7 @@ function Register({navigation}) {
             "Uh-oh! It didn't work...Make sure your server is running!"
             )
         );
+        
     }
     
 
@@ -62,7 +64,6 @@ function Register({navigation}) {
                     fontSize:25,
                     alignSelf:"center",
                     color:"#00716F",
-                    fontFamily:"SemiBold",
                     paddingVertical:30}}>
                     Join Us
                     </Text>
@@ -96,7 +97,7 @@ function Register({navigation}) {
                     borderColor:"#00716F",
                     borderRadius:23,
                     paddingVertical:2}}>
-            <Icon name="username" color="#00716F" size={24}/>
+            <Icon name="user" color="#00716F" size={24}/>
                 <TextInput 
                     onChangeText= {(e) => setUsername(e)}
                     value={username}
@@ -139,7 +140,6 @@ function Register({navigation}) {
                     onPress={()=>createUser()}
                     style={{
                     color:"white",
-                    fontFamily:"SemiBold"
                     }}>
                     Register
                 </Text>

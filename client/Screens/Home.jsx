@@ -6,14 +6,24 @@ import HeaderTabs from '../components/Home/HeaderTabs'
 import Searchbar from '../components/Home/Searchbar'
 import Categories from '../components/Home/Categories'
 import RestaurantItems from '../components/Home/RestaurantItems'
+import * as SecureStore from 'expo-secure-store';
 
 import BottomTabs from '../components/Home/BottomTabs'
 
-export default function Home({navigation}) {
+export default function Home({navigation, route}) {
   const [restaurants, setRestaurants] = useState([])
   const [city, setCity] = useState('New York')
   const [status,setStatus] = useState('Delivery')
+  const [token, setToken] = useState('')
+  const [key, setKey] = useState('')
 
+  // async function getValuefor(key){
+  //   let token = await SecureStore.getItemAsync(key);
+  //   if (token){
+  //     console.log ('it worked')
+  //     console.log (token)
+  //   } else {console.log("invalid key")}
+  // }
 
   const YELP_API_KEY = 
   'XOfbkvzZ03OsqOPA4An2yO5dJAGxm0fxhwPtISbWeZcz0VP_iqyFSivGDkFAJbfo2DDPXh7Gd-BISbMKwxO8jvQuqDcX8V2gKPLZsYX4SCungVgigQLkCmrffaJBYnYx'
@@ -42,6 +52,8 @@ export default function Home({navigation}) {
 
   useEffect(() => {
     getRestaurantsFromYelp();
+    // getValuefor("user")
+    
   }, [city, status]);
   
   
@@ -58,7 +70,7 @@ export default function Home({navigation}) {
           <RestaurantItems restaurants={restaurants} navigation={navigation}/>
         </ScrollView>
         <Divider width={1}/>
-          <BottomTabs navigation={navigation}/>
+          <BottomTabs navigation={navigation} />
     </SafeAreaView>
   )
 }

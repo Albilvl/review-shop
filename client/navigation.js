@@ -24,6 +24,13 @@ function RootNavigation(){
     const Stack = createStackNavigator();
     const store = configureStore()
 
+    async function getValuefor(key){
+      let token = await SecureStore.getItemAsync(key);
+      if (token){
+          console.log (value)
+      } else {console.log("invalid key")}
+  }
+
     const screenOptions = {
         headerShown: false,
       };
@@ -31,17 +38,14 @@ function RootNavigation(){
     return (
       <ReduxProvider store={store}>
            <NavigationContainer>
-            <Stack.Navigator initialRouteName="Home" screenOptions={screenOptions}>
+            <Stack.Navigator initialRouteName="Login" screenOptions={screenOptions}>
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="RestaurantDetail" component={RestaurantDetails} />
               <Stack.Screen name="OrderCompleted" component={OrderCompleted} />
               <Stack.Screen name="Favorites" component={Favorites} />
-              <Stack.Screen name="Orders" component={Orders} />
+              {/* <Stack.Screen name="Orders" component={Orders} /> */}
               <Stack.Screen name="Login" component={Login} testing={testing} />
               <Stack.Screen name="Register" component={Register} />
-
-
-
             </Stack.Navigator>
           </NavigationContainer>
       </ReduxProvider>
